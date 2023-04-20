@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ethers, Signer } from 'ethers';
-import { Monster as _Monster,Game as _Game } from './contracts';
+import { Monster as _Monster,Game as Donation } from './contracts';
 
 import Header from './components/header';
 import Enemy from './components/enemy';
@@ -45,22 +45,13 @@ function App() {
   conncetWallet();
 
   async function Confirm() {
-   
-    if (account !== '0xa89c...7926') {
-      return alert('当前账户不是owner')
-    }
 
     try {
 
       let tx:any;
-      if(nav === 'monster'){
-        let {id,odds,reward,xp,hp,name} = inputData;
-        tx = await _Monster(signer).editEnemy(id, odds,reward,xp, hp, name);
-      }else{
-        let {id,odds,reward} = inputData;
-        tx = await _Game(signer).editTask(id, odds,reward);
-      }
-
+      let {amount,detele} = inputData;
+      tx = await Donation(signer).donation(amount);
+      
       console.log(tx);
       await tx.wait(1);
       alert('This transaction was successful~')
@@ -82,11 +73,12 @@ function App() {
 
       <Header account={account} balance={balance} />
       <p className='nav' style={{ marginTop: 80 + 'px' }}>
-        <span onClick={e => changeNav('monster')} className={nav === 'monster' ? 'cur' : ''}>Monster Info</span>
-        <span onClick={e => changeNav('game')} className={nav === 'game' ? 'cur' : ''}>Game Info</span>
+        {/* <span onClick={e => changeNav('monster')} className={nav === 'monster' ? 'cur' : ''}>Monster Info</span> */}
+        <span onClick={e => changeNav('game')} className={nav === 'game' ? 'cur' : ''}>Donation</span>
       </p>
       <div className='input-box'>
-        {nav === 'monster' ? <Enemy nav={nav} changeNav={changeNav} setInputData={_setInputData} /> : <Task />}
+        {/* {nav === 'monster' ? <Enemy nav={nav} changeNav={changeNav} setInputData={_setInputData} /> : <Task />} */}
+        <Task nav={nav} changeNav={changeNav} setInputData={_setInputData} />
       </div>
       <div style={{ textAlign: 'center' }}>
         <button onClick={account ? Confirm : conncetWallet}>{account ? 'Confirm' : 'Conncet Metamask'}</button>

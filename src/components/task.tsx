@@ -3,12 +3,11 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function Task(props: any) {
 
-    let enemyInfo = ['Id', 'Odds', 'Reward'];
+    let enemyInfo = ['Amount', 'Delete', ];
 
     let data = {
-        id: '',
-        odds: '',
-        reward: '',
+        amount: '',
+        delete:''
       }
 
     const [inputValue1, setInputValue1] = useState('');
@@ -22,7 +21,7 @@ function Task(props: any) {
     return (
         <React.Fragment>
             {enemyInfo.map((item,index) =>
-                <p key={index} >Enemy {item} * : <input type="text" value={inputValue1} onChange={handleChange } ></input> </p>
+                <p key={index} >donation {item} * : <input type="text" value={inputValue1} onChange={handleChange } ></input> </p>
             )}
         </React.Fragment>
     )
